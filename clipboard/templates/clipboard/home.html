@@ -44,7 +44,7 @@
             letter-spacing: -1px;
         }
 
-        .logo span {
+        .logo span, footer span {
             color: #a78bfa;
         }
 
@@ -57,10 +57,10 @@
             border-radius: 9px;
             font-size: 13px;
             font-weight: 600;
-            transition: .2s;
         }
 
-        .nav-btn:hover {
+        .nav-btn:hover, .tool-btn:hover, .clear-btn:hover,
+        .copy-btn:hover, .download-qr-btn:hover {
             border-color: #8b5cf6;
             background: #252d49;
         }
@@ -147,6 +147,8 @@
             font-size: 14px;
             line-height: 1.7;
             transition: .2s;
+            user-select: text;
+            -webkit-user-select: text;
         }
 
         textarea:focus {
@@ -156,6 +158,24 @@
 
         textarea::placeholder {
             color: #68728a;
+        }
+
+        .text-tools {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .tool-btn {
+            flex: 1;
+            padding: 11px;
+            border: 1px solid #343b59;
+            border-radius: 9px;
+            background: #1a2037;
+            color: #d1d5e8;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
         }
 
         .text-info {
@@ -193,10 +213,6 @@
             cursor: pointer;
         }
 
-        .expiry-section select:focus {
-            border-color: #8b5cf6;
-        }
-
         .expiry-section small {
             display: block;
             color: #8992a8;
@@ -223,10 +239,6 @@
             border-radius: 10px;
             font-size: 13px;
             font-weight: 600;
-        }
-
-        .clear-btn:hover {
-            background: #252d49;
         }
 
         .save-btn {
@@ -284,7 +296,7 @@
             outline: none;
         }
 
-        .copy-btn {
+        .copy-btn, .download-qr-btn {
             padding: 12px 17px;
             background: #25304b;
             color: white;
@@ -292,10 +304,6 @@
             border-radius: 8px;
             font-size: 12px;
             font-weight: 600;
-        }
-
-        .copy-btn:hover {
-            background: #344365;
         }
 
         .qr-section {
@@ -322,8 +330,7 @@
             min-height: 190px;
         }
 
-        #qrcode img,
-        #qrcode canvas {
+        #qrcode img, #qrcode canvas {
             display: block;
             margin: auto;
         }
@@ -336,17 +343,6 @@
 
         .download-qr-btn {
             margin-top: 16px;
-            padding: 11px 18px;
-            background: #25304b;
-            border: 1px solid #3b496a;
-            border-radius: 9px;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .download-qr-btn:hover {
-            background: #344365;
         }
 
         .features {
@@ -406,10 +402,6 @@
             line-height: 2;
         }
 
-        footer span {
-            color: #c4b5fd;
-        }
-
         .toast-container {
             position: fixed;
             bottom: 25px;
@@ -439,20 +431,17 @@
 
         .toast.success {
             background: #14532d;
-            border: 1px solid #22c55e;
-            color: #dcfce7;
+            border-color: #22c55e;
         }
 
         .toast.error {
             background: #7f1d1d;
-            border: 1px solid #ef4444;
-            color: #fee2e2;
+            border-color: #ef4444;
         }
 
         .toast.info {
             background: #312e81;
-            border: 1px solid #8b5cf6;
-            color: #ede9fe;
+            border-color: #8b5cf6;
         }
 
         .modal-overlay {
@@ -519,412 +508,400 @@
         }
 
         @media(max-width:650px) {
-            nav {
-                padding: 20px;
-            }
-
-            .hero {
-                margin-top: 35px;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .editor-card {
-                padding: 23px 18px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .features {
-                margin: 65px auto;
-            }
-
-            .actions {
-                flex-direction: column;
-            }
-
-            .clear-btn,
-            .save-btn {
-                width: 100%;
-            }
-
-            .share-link {
-                flex-direction: column;
-            }
-
-            .copy-btn {
-                width: 100%;
-            }
-
-            .toast-container {
-                left: 15px;
-                right: 15px;
-                bottom: 15px;
-            }
-
-            .toast {
-                text-align: center;
-            }
+            nav { padding: 20px; }
+            .hero { margin-top: 35px; }
+            .hero h1 { letter-spacing: -2px; }
+            .editor-card { padding: 23px 18px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .features { margin: 65px auto; }
+            .actions, .share-link, .text-tools { flex-direction: column; }
+            .clear-btn, .save-btn, .copy-btn { width: 100%; }
+            .toast-container { left: 15px; right: 15px; bottom: 15px; }
+            .toast { text-align: center; }
         }
     </style>
 </head>
 
 <body>
 
-    <nav>
-        <div class="logo">✦ Quick<span>Share.</span></div>
-        <a href="#editor" class="nav-btn">Create Clipboard ↗</a>
-    </nav>
+<nav>
+    <div class="logo">✦ Quick<span>Share.</span></div>
+    <a href="#editor" class="nav-btn">Create Clipboard ↗</a>
+</nav>
 
-    <section class="hero">
-        <div class="tagline">✦ SIMPLE · FAST · SECURE</div>
-        <h1>Share Text.<br><span>Anywhere, Anytime.</span></h1>
-        <p>
-            Your personal online clipboard. Save your text and share it
-            with anyone, anywhere in seconds.
-        </p>
-    </section>
+<section class="hero">
+    <div class="tagline">✦ SIMPLE · FAST · SECURE</div>
+    <h1>Share Text.<br><span>Anywhere, Anytime.</span></h1>
+    <p>Your personal online clipboard. Save your text and share it with anyone, anywhere in seconds.</p>
+</section>
 
-    <section class="main-section" id="editor">
+<section class="main-section" id="editor">
+    <div class="editor-card">
 
-        <div class="editor-card">
-
-            <div class="editor-heading">
-                <h2>Create Your Clipboard</h2>
-                <p>Write your text below and generate a shareable link.</p>
-            </div>
-
-            <form id="clipboardForm" method="POST" action="/">
-                {% csrf_token %}
-
-                <textarea
-                    id="clipboardInput"
-                    name="text"
-                    placeholder="Write or paste your text here..."
-                ></textarea>
-
-                <div class="text-info">
-                    <span id="charCount">0 characters</span>
-                    <span id="wordCount">0 words</span>
-                </div>
-
-                <div class="expiry-section">
-                    <label for="expiryHours">⏱ Clipboard Expiry</label>
-
-                    <select id="expiryHours" name="expiry_hours">
-                        <option value="1">1 Hour</option>
-                        <option value="24" selected>24 Hours</option>
-                        <option value="168">7 Days</option>
-                        <option value="0">Never Expire</option>
-                    </select>
-
-                    <small>Choose how long your shared clipboard stays available.</small>
-                </div>
-
-                <div class="actions">
-                    <button type="button" class="clear-btn" onclick="openClearModal()">
-                        Clear Text
-                    </button>
-
-                    <button type="submit" class="save-btn" id="saveBtn">
-                        Save & Share ↗
-                    </button>
-                </div>
-            </form>
-
-            <div class="result-box" id="resultBox">
-                <h3>✓ Your clipboard is ready!</h3>
-
-                <div class="share-link">
-                    <input type="text" id="shareUrl" readonly>
-                    <button type="button" class="copy-btn" onclick="copyLink()">Copy Link</button>
-                </div>
-
-                <div class="qr-section">
-                    <h3>Or Scan QR Code</h3>
-
-                    <div class="qr-container">
-                        <div id="qrcode"></div>
-                    </div>
-
-                    <p>Scan this QR code to open your shared clipboard.</p>
-
-                    <button type="button" class="download-qr-btn" onclick="downloadQR()">
-                        Download QR Code ↓
-                    </button>
-                </div>
-            </div>
-
+        <div class="editor-heading">
+            <h2>Create Your Clipboard</h2>
+            <p>Write your text below and generate a shareable link.</p>
         </div>
 
-    </section>
+        <form id="clipboardForm" method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
 
-    <section class="features">
+            <textarea
+                id="clipboardInput"
+                name="text"
+                placeholder="Write or paste your text here..."
+                autocomplete="off"
+                spellcheck="true"
+                maxlength="100000"
+            ></textarea>
 
-        <h2 class="features-title">Why Choose QuickShare?</h2>
-
-        <div class="feature-grid">
-
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Super Fast</h3>
-                <p>
-                    Create and share your clipboard in seconds.
-                    No complicated steps or unnecessary delays.
-                </p>
+            <div class="text-tools">
+                <button type="button" class="tool-btn" id="pasteBtn">📋 Paste Text</button>
+                <button type="button" class="tool-btn" id="copyTextBtn">📄 Copy Text</button>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>Easy Sharing</h3>
-                <p>
-                    Generate a unique link and share your text
-                    with anyone, anywhere.
-                </p>
+            <div class="text-info">
+                <span id="charCount">0 characters</span>
+                <span id="wordCount">0 words</span>
             </div>
 
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h3>QR Code Sharing</h3>
-                <p>
-                    Scan or download your QR code to open
-                    your shared clipboard quickly.
-                </p>
+            <div class="expiry-section">
+                <label for="expiryHours">⏱ Clipboard Expiry</label>
+                <select id="expiryHours" name="expiry_hours">
+                    <option value="1">1 Hour</option>
+                    <option value="24" selected>24 Hours</option>
+                    <option value="168">7 Days</option>
+                    <option value="0">Never Expire</option>
+                </select>
+                <small>Choose how long your shared clipboard stays available.</small>
             </div>
 
+            <div class="actions">
+                <button type="button" class="clear-btn" id="clearBtn">Clear Text</button>
+                <button type="submit" class="save-btn" id="saveBtn">Save & Share ↗</button>
+            </div>
+        </form>
+
+        <div class="result-box" id="resultBox">
+            <h3>✓ Your clipboard is ready!</h3>
+            <div class="share-link">
+                <input type="text" id="shareUrl" readonly>
+                <button type="button" class="copy-btn" id="copyLinkBtn">Copy Link</button>
+            </div>
+
+            <div class="qr-section">
+                <h3>Or Scan QR Code</h3>
+                <div class="qr-container">
+                    <div id="qrcode"></div>
+                </div>
+                <p>Scan this QR code to open your shared clipboard.</p>
+                <button type="button" class="download-qr-btn" id="downloadQRBtn">Download QR Code ↓</button>
+            </div>
         </div>
 
-    </section>
+    </div>
+</section>
 
-    <footer>
-        Made with ❤️ by <span>Kunal Jolly</span><br>
-        © 2026 QuickShare. All Rights Reserved.
-    </footer>
-
-    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
-
-    <div class="modal-overlay" id="clearModal">
-        <div class="modal">
-
-            <div class="modal-icon">🗑️</div>
-            <h3>Clear your text?</h3>
-
-            <p>
-                Are you sure you want to remove all the text
-                from your clipboard?
-            </p>
-
-            <div class="modal-actions">
-                <button type="button" class="cancel-btn" onclick="closeClearModal()">
-                    Cancel
-                </button>
-
-                <button type="button" class="confirm-btn" onclick="confirmClear()">
-                    Yes, Clear
-                </button>
-            </div>
-
+<section class="features">
+    <h2 class="features-title">Why Choose QuickShare?</h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Super Fast</h3>
+            <p>Create and share your clipboard in seconds. No complicated steps or unnecessary delays.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Easy Sharing</h3>
+            <p>Generate a unique link and share your text with anyone, anywhere.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>QR Code Sharing</h3>
+            <p>Scan or download your QR code to open your shared clipboard quickly.</p>
         </div>
     </div>
+</section>
 
-    <script>
-        const clipboardInput = document.getElementById("clipboardInput");
-        const charCount = document.getElementById("charCount");
-        const wordCount = document.getElementById("wordCount");
-        const clipboardForm = document.getElementById("clipboardForm");
-        const saveBtn = document.getElementById("saveBtn");
-        const resultBox = document.getElementById("resultBox");
-        const shareUrl = document.getElementById("shareUrl");
+<footer>
+    Made with ❤️ by <span>Kunal Jolly</span><br>
+    © 2026 QuickShare. All Rights Reserved.
+</footer>
 
-        let toastTimer;
-        let qrCodeInstance = null;
+<div class="toast-container" id="toastContainer" aria-live="polite"></div>
 
-        function updateCount() {
-            const text = clipboardInput.value;
+<div class="modal-overlay" id="clearModal">
+    <div class="modal">
+        <div class="modal-icon">🗑️</div>
+        <h3>Clear your text?</h3>
+        <p>Are you sure you want to remove all the text from your clipboard?</p>
+        <div class="modal-actions">
+            <button type="button" class="cancel-btn" id="cancelClearBtn">Cancel</button>
+            <button type="button" class="confirm-btn" id="confirmClearBtn">Yes, Clear</button>
+        </div>
+    </div>
+</div>
 
-            charCount.textContent = text.length + " characters";
+<script>
+    const clipboardInput = document.getElementById("clipboardInput");
+    const clipboardForm = document.getElementById("clipboardForm");
+    const saveBtn = document.getElementById("saveBtn");
+    const resultBox = document.getElementById("resultBox");
+    const shareUrl = document.getElementById("shareUrl");
+    const charCount = document.getElementById("charCount");
+    const wordCount = document.getElementById("wordCount");
+    const clearModal = document.getElementById("clearModal");
 
-            const words = text.trim() === ""
-                ? 0
-                : text.trim().split(/\s+/).length;
+    let toastTimer;
 
-            wordCount.textContent = words + " words";
+    function updateCount() {
+        const text = clipboardInput.value;
+        charCount.textContent = text.length + " characters";
 
-            resultBox.style.display = "none";
+        const words = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
+        wordCount.textContent = words + " words";
+    }
+
+    clipboardInput.addEventListener("input", updateCount);
+
+    function showToast(message, type = "success") {
+        const container = document.getElementById("toastContainer");
+        container.replaceChildren();
+
+        const toast = document.createElement("div");
+        toast.className = "toast " + type;
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        requestAnimationFrame(() => toast.classList.add("show"));
+
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    async function copyText(text) {
+        if (!text) throw new Error("There is no text to copy.");
+
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
         }
 
-        clipboardInput.addEventListener("input", updateCount);
+        const temporary = document.createElement("textarea");
+        temporary.value = text;
+        temporary.style.position = "fixed";
+        temporary.style.opacity = "0";
+        temporary.style.left = "-9999px";
 
-        function showToast(message, type = "success") {
-            const container = document.getElementById("toastContainer");
+        document.body.appendChild(temporary);
+        temporary.select();
 
-            container.innerHTML = "";
+        const copied = document.execCommand("copy");
+        temporary.remove();
 
-            const toast = document.createElement("div");
-            toast.className = "toast " + type;
-            toast.textContent = message;
+        if (!copied) throw new Error("Copy failed. Please copy manually.");
+    }
 
-            container.appendChild(toast);
+    async function pasteText() {
+        try {
+            if (!navigator.clipboard || !window.isSecureContext) {
+                throw new Error("Use Ctrl + V inside the text box to paste.");
+            }
 
-            requestAnimationFrame(() => {
-                toast.classList.add("show");
-            });
+            const pastedText = await navigator.clipboard.readText();
 
-            clearTimeout(toastTimer);
-
-            toastTimer = setTimeout(() => {
-                toast.classList.remove("show");
-
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3000);
-        }
-
-        function openClearModal() {
-            if (clipboardInput.value.trim() === "") {
-                showToast("There is no text to clear.", "info");
+            if (!pastedText) {
+                showToast("Your clipboard is empty.", "info");
                 return;
             }
 
-            document.getElementById("clearModal").style.display = "flex";
-        }
+            const start = clipboardInput.selectionStart;
+            const end = clipboardInput.selectionEnd;
 
-        function closeClearModal() {
-            document.getElementById("clearModal").style.display = "none";
-        }
-
-        function confirmClear() {
-            clipboardInput.value = "";
-            updateCount();
-            closeClearModal();
-            showToast("✓ Text cleared successfully!", "success");
+            clipboardInput.setRangeText(pastedText, start, end, "end");
+            clipboardInput.dispatchEvent(new Event("input", { bubbles: true }));
             clipboardInput.focus();
+
+            showToast("Text pasted successfully!", "success");
+        } catch (error) {
+            showToast(
+                error.name === "NotAllowedError"
+                    ? "Clipboard permission denied. Use Ctrl + V."
+                    : error.message,
+                "error"
+            );
+        }
+    }
+
+    document.getElementById("pasteBtn").addEventListener("click", pasteText);
+
+    document.getElementById("copyTextBtn").addEventListener("click", async () => {
+        try {
+            await copyText(clipboardInput.value);
+            showToast("Text copied successfully!", "success");
+        } catch (error) {
+            showToast(error.message, "error");
+        }
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+        if (!clipboardInput.value.trim()) {
+            showToast("There is no text to clear.", "info");
+            return;
+        }
+        clearModal.style.display = "flex";
+    });
+
+    document.getElementById("cancelClearBtn").addEventListener("click", () => {
+        clearModal.style.display = "none";
+    });
+
+    document.getElementById("confirmClearBtn").addEventListener("click", () => {
+        clipboardInput.value = "";
+        updateCount();
+        resultBox.style.display = "none";
+        clearModal.style.display = "none";
+        clipboardInput.focus();
+        showToast("Text cleared successfully!", "success");
+    });
+
+    function generateQR(url) {
+        const qrContainer = document.getElementById("qrcode");
+        qrContainer.replaceChildren();
+
+        if (typeof QRCode === "undefined") {
+            showToast("QR library could not load. Check your internet connection.", "error");
+            return;
         }
 
-        function generateQR(url) {
-            const qrContainer = document.getElementById("qrcode");
-            qrContainer.innerHTML = "";
-
-            if (typeof QRCode === "undefined") {
-                showToast("QR library could not load. Check your internet connection.", "error");
-                return;
-            }
-
-            qrCodeInstance = new QRCode(qrContainer, {
-                text: url,
-                width: 160,
-                height: 160,
-                colorDark: "#080b18",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        }
-
-        clipboardForm.addEventListener("submit", async function(event) {
-            event.preventDefault();
-
-            const text = clipboardInput.value.trim();
-
-            if (!text) {
-                showToast("Please enter some text first.", "error");
-                clipboardInput.focus();
-                return;
-            }
-
-            const formData = new FormData(clipboardForm);
-
-            saveBtn.disabled = true;
-            saveBtn.textContent = "Creating...";
-
-            try {
-                const response = await fetch("/", {
-                    method: "POST",
-                    body: formData,
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }
-                });
-
-                const data = await response.json();
-
-                if (!response.ok || !data.success) {
-                    throw new Error(data.error || "Something went wrong.");
-                }
-
-                shareUrl.value = data.share_url;
-                resultBox.style.display = "block";
-
-                generateQR(data.share_url);
-
-                showToast("✓ Clipboard created successfully!", "success");
-
-                resultBox.scrollIntoView({
-                    behavior: "smooth",
-                    block: "nearest"
-                });
-
-            } catch (error) {
-                showToast(error.message || "Unable to create clipboard.", "error");
-
-            } finally {
-                saveBtn.disabled = false;
-                saveBtn.textContent = "Save & Share ↗";
-            }
+        new QRCode(qrContainer, {
+            text: url,
+            width: 160,
+            height: 160,
+            colorDark: "#080b18",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
         });
+    }
 
-        async function copyLink() {
-            const link = shareUrl.value;
+    clipboardForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!clipboardInput.value.trim()) {
+            showToast("Please enter some text first.", "error");
+            clipboardInput.focus();
+            return;
+        }
+
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Creating...";
+
+        try {
+            const response = await fetch(clipboardForm.action, {
+                method: "POST",
+                body: new FormData(clipboardForm),
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json"
+                },
+                credentials: "same-origin"
+            });
+
+            const responseText = await response.text();
+            let data;
 
             try {
-                await navigator.clipboard.writeText(link);
-                showToast("✓ Share link copied!", "success");
-            } catch (error) {
-                shareUrl.select();
+                data = JSON.parse(responseText);
+            } catch {
+                console.error("Unexpected server response:", response.status, responseText);
 
-                const copied = document.execCommand("copy");
-
-                if (copied) {
-                    showToast("✓ Share link copied!", "success");
-                } else {
-                    showToast("Unable to copy link.", "error");
+                if (response.status === 403) {
+                    throw new Error("CSRF verification failed. Refresh the page and try again.");
                 }
+
+                if (response.status === 400) {
+                    throw new Error("Bad Request (400). Check the server configuration.");
+                }
+
+                if (response.status >= 500) {
+                    throw new Error("Server error. Please try again later.");
+                }
+
+                throw new Error("Server returned HTML instead of JSON. Refresh and try again.");
             }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.error || "Unable to create clipboard.");
+            }
+
+            if (!data.share_url) {
+                throw new Error("Share link was not returned by the server.");
+            }
+
+            shareUrl.value = data.share_url;
+            resultBox.style.display = "block";
+            generateQR(data.share_url);
+
+            showToast("Clipboard created successfully!", "success");
+
+            resultBox.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+
+        } catch (error) {
+            console.error("QuickShare error:", error);
+            showToast(error.message || "Unable to create clipboard.", "error");
+        } finally {
+            saveBtn.disabled = false;
+            saveBtn.textContent = "Save & Share ↗";
+        }
+    });
+
+    document.getElementById("copyLinkBtn").addEventListener("click", async () => {
+        try {
+            await copyText(shareUrl.value);
+            showToast("Share link copied!", "success");
+        } catch (error) {
+            shareUrl.focus();
+            shareUrl.select();
+            showToast(error.message, "error");
+        }
+    });
+
+    document.getElementById("downloadQRBtn").addEventListener("click", () => {
+        const qrContainer = document.getElementById("qrcode");
+        const canvas = qrContainer.querySelector("canvas");
+        const image = qrContainer.querySelector("img");
+
+        let imageUrl = "";
+
+        if (canvas) {
+            imageUrl = canvas.toDataURL("image/png");
+        } else if (image) {
+            imageUrl = image.src;
         }
 
-        function downloadQR() {
-            const qrContainer = document.getElementById("qrcode");
-            const canvas = qrContainer.querySelector("canvas");
-            const image = qrContainer.querySelector("img");
-
-            let imageUrl = "";
-
-            if (canvas) {
-                imageUrl = canvas.toDataURL("image/png");
-            } else if (image) {
-                imageUrl = image.src;
-            }
-
-            if (!imageUrl) {
-                showToast("QR code is not ready yet.", "error");
-                return;
-            }
-
-            const link = document.createElement("a");
-            link.href = imageUrl;
-            link.download = "QuickShare-QR-Code.png";
-
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-
-            showToast("✓ QR Code downloaded!", "success");
+        if (!imageUrl) {
+            showToast("QR code is not ready yet.", "error");
+            return;
         }
-    </script>
+
+        const link = document.createElement("a");
+        link.href = imageUrl;
+        link.download = "QuickShare-QR-Code.png";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        showToast("QR Code downloaded!", "success");
+    });
+
+    updateCount();
+</script>
 
 </body>
 </html>
