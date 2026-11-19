@@ -1,0 +1,930 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickShare | Online Clipboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(124,58,237,.16), transparent 35%),
+                radial-gradient(circle at 85% 85%, rgba(59,130,246,.12), transparent 35%),
+                #080b18;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        nav {
+            max-width: 1150px;
+            margin: auto;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #a78bfa;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            color: white;
+            background: #1b2140;
+            border: 1px solid #343b59;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-btn:hover {
+            border-color: #8b5cf6;
+            background: #252d49;
+        }
+
+        .hero {
+            max-width: 850px;
+            margin: 55px auto 35px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .tagline {
+            display: inline-block;
+            color: #c4b5fd;
+            background: rgba(139,92,246,.12);
+            border: 1px solid rgba(139,92,246,.25);
+            padding: 9px 17px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 7vw, 65px);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -3px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 span {
+            color: #a78bfa;
+        }
+
+        .hero p {
+            color: #9ca3b8;
+            max-width: 580px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .main-section {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .editor-card {
+            background: rgba(17,22,42,.9);
+            border: 1px solid rgba(139,120,255,.2);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 25px 80px rgba(0,0,0,.3);
+        }
+
+        .editor-heading {
+            margin-bottom: 22px;
+        }
+
+        .editor-heading h2 {
+            font-size: 21px;
+            margin-bottom: 9px;
+        }
+
+        .editor-heading p {
+            color: #8992a8;
+            font-size: 13px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 190px;
+            resize: vertical;
+            padding: 20px;
+            border-radius: 13px;
+            border: 1px solid #303753;
+            background: #090e20;
+            color: white;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.7;
+            transition: .2s;
+        }
+
+        textarea:focus {
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 3px rgba(139,92,246,.1);
+        }
+
+        textarea::placeholder {
+            color: #68728a;
+        }
+
+        .text-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: #8992a8;
+            font-size: 11px;
+            margin-top: 12px;
+            margin-bottom: 24px;
+        }
+
+        .expiry-section {
+            margin-bottom: 22px;
+        }
+
+        .expiry-section label {
+            display: block;
+            color: #c4b5fd;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .expiry-section select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #343b59;
+            background: #090e20;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .expiry-section select:focus {
+            border-color: #8b5cf6;
+        }
+
+        .expiry-section small {
+            display: block;
+            color: #8992a8;
+            font-size: 11px;
+            margin-top: 9px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .clear-btn {
+            padding: 14px 20px;
+            border: 1px solid #343b59;
+            background: #1a2037;
+            color: #d1d5e8;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .clear-btn:hover {
+            background: #252d49;
+        }
+
+        .save-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            background: linear-gradient(135deg,#7c3aed,#4f46e5);
+            box-shadow: 0 7px 22px rgba(124,58,237,.2);
+        }
+
+        .save-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(124,58,237,.35);
+        }
+
+        .save-btn:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(34,197,94,.07);
+            border: 1px solid rgba(34,197,94,.25);
+            border-radius: 13px;
+        }
+
+        .result-box h3 {
+            color: #4ade80;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .share-link {
+            display: flex;
+            gap: 8px;
+        }
+
+        .share-link input {
+            flex: 1;
+            min-width: 0;
+            padding: 12px;
+            background: #090e20;
+            border: 1px solid #303753;
+            border-radius: 8px;
+            color: #d1d5e8;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .copy-btn {
+            padding: 12px 17px;
+            background: #25304b;
+            color: white;
+            border: 1px solid #3b496a;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .copy-btn:hover {
+            background: #344365;
+        }
+
+        .qr-section {
+            text-align: center;
+            margin-top: 28px;
+            padding-top: 23px;
+            border-top: 1px solid #303753;
+        }
+
+        .qr-section h3 {
+            color: #c4b5fd;
+            font-size: 15px;
+            margin-bottom: 17px;
+        }
+
+        .qr-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: white;
+            border-radius: 14px;
+            min-width: 190px;
+            min-height: 190px;
+        }
+
+        #qrcode img,
+        #qrcode canvas {
+            display: block;
+            margin: auto;
+        }
+
+        .qr-section p {
+            color: #8992a8;
+            font-size: 11px;
+            margin-top: 14px;
+        }
+
+        .download-qr-btn {
+            margin-top: 16px;
+            padding: 11px 18px;
+            background: #25304b;
+            border: 1px solid #3b496a;
+            border-radius: 9px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .download-qr-btn:hover {
+            background: #344365;
+        }
+
+        .features {
+            max-width: 1000px;
+            margin: 90px auto;
+            padding: 0 25px;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 27px;
+            margin-bottom: 35px;
+            letter-spacing: -1px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            padding: 27px;
+            background: #11162a;
+            border: 1px solid #252d49;
+            border-radius: 16px;
+            transition: .25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: #7161c9;
+        }
+
+        .feature-icon {
+            font-size: 26px;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #8992a8;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            border-top: 1px solid #20263d;
+            color: #788198;
+            font-size: 12px;
+            line-height: 2;
+        }
+
+        footer span {
+            color: #c4b5fd;
+        }
+
+        .toast-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: #17213a;
+            border: 1px solid #33415f;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 10px 35px rgba(0,0,0,.35);
+            opacity: 0;
+            transform: translateY(15px);
+            transition: .3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .toast.success {
+            background: #14532d;
+            border: 1px solid #22c55e;
+            color: #dcfce7;
+        }
+
+        .toast.error {
+            background: #7f1d1d;
+            border: 1px solid #ef4444;
+            color: #fee2e2;
+        }
+
+        .toast.info {
+            background: #312e81;
+            border: 1px solid #8b5cf6;
+            color: #ede9fe;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.75);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal {
+            width: 100%;
+            max-width: 380px;
+            padding: 30px;
+            text-align: center;
+            background: #151b31;
+            border: 1px solid #343b59;
+            border-radius: 18px;
+        }
+
+        .modal-icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .modal h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal p {
+            color: #9ca3b8;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 23px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 9px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cancel-btn {
+            background: #252d49;
+            border: 1px solid #343b59;
+            color: white;
+        }
+
+        .confirm-btn {
+            background: #dc2626;
+            border: none;
+            color: white;
+        }
+
+        @media(max-width:650px) {
+            nav {
+                padding: 20px;
+            }
+
+            .hero {
+                margin-top: 35px;
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+            .editor-card {
+                padding: 23px 18px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                margin: 65px auto;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .clear-btn,
+            .save-btn {
+                width: 100%;
+            }
+
+            .share-link {
+                flex-direction: column;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
+
+            .toast-container {
+                left: 15px;
+                right: 15px;
+                bottom: 15px;
+            }
+
+            .toast {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">✦ Quick<span>Share.</span></div>
+        <a href="#editor" class="nav-btn">Create Clipboard ↗</a>
+    </nav>
+
+    <section class="hero">
+        <div class="tagline">✦ SIMPLE · FAST · SECURE</div>
+        <h1>Share Text.<br><span>Anywhere, Anytime.</span></h1>
+        <p>
+            Your personal online clipboard. Save your text and share it
+            with anyone, anywhere in seconds.
+        </p>
+    </section>
+
+    <section class="main-section" id="editor">
+
+        <div class="editor-card">
+
+            <div class="editor-heading">
+                <h2>Create Your Clipboard</h2>
+                <p>Write your text below and generate a shareable link.</p>
+            </div>
+
+            <form id="clipboardForm" method="POST" action="/">
+                {% csrf_token %}
+
+                <textarea
+                    id="clipboardInput"
+                    name="text"
+                    placeholder="Write or paste your text here..."
+                ></textarea>
+
+                <div class="text-info">
+                    <span id="charCount">0 characters</span>
+                    <span id="wordCount">0 words</span>
+                </div>
+
+                <div class="expiry-section">
+                    <label for="expiryHours">⏱ Clipboard Expiry</label>
+
+                    <select id="expiryHours" name="expiry_hours">
+                        <option value="1">1 Hour</option>
+                        <option value="24" selected>24 Hours</option>
+                        <option value="168">7 Days</option>
+                        <option value="0">Never Expire</option>
+                    </select>
+
+                    <small>Choose how long your shared clipboard stays available.</small>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="clear-btn" onclick="openClearModal()">
+                        Clear Text
+                    </button>
+
+                    <button type="submit" class="save-btn" id="saveBtn">
+                        Save & Share ↗
+                    </button>
+                </div>
+            </form>
+
+            <div class="result-box" id="resultBox">
+                <h3>✓ Your clipboard is ready!</h3>
+
+                <div class="share-link">
+                    <input type="text" id="shareUrl" readonly>
+                    <button type="button" class="copy-btn" onclick="copyLink()">Copy Link</button>
+                </div>
+
+                <div class="qr-section">
+                    <h3>Or Scan QR Code</h3>
+
+                    <div class="qr-container">
+                        <div id="qrcode"></div>
+                    </div>
+
+                    <p>Scan this QR code to open your shared clipboard.</p>
+
+                    <button type="button" class="download-qr-btn" onclick="downloadQR()">
+                        Download QR Code ↓
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="features">
+
+        <h2 class="features-title">Why Choose QuickShare?</h2>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Super Fast</h3>
+                <p>
+                    Create and share your clipboard in seconds.
+                    No complicated steps or unnecessary delays.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h3>Easy Sharing</h3>
+                <p>
+                    Generate a unique link and share your text
+                    with anyone, anywhere.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>QR Code Sharing</h3>
+                <p>
+                    Scan or download your QR code to open
+                    your shared clipboard quickly.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <footer>
+        Made with ❤️ by <span>Kunal Jolly</span><br>
+        © 2026 QuickShare. All Rights Reserved.
+    </footer>
+
+    <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+    <div class="modal-overlay" id="clearModal">
+        <div class="modal">
+
+            <div class="modal-icon">🗑️</div>
+            <h3>Clear your text?</h3>
+
+            <p>
+                Are you sure you want to remove all the text
+                from your clipboard?
+            </p>
+
+            <div class="modal-actions">
+                <button type="button" class="cancel-btn" onclick="closeClearModal()">
+                    Cancel
+                </button>
+
+                <button type="button" class="confirm-btn" onclick="confirmClear()">
+                    Yes, Clear
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const clipboardInput = document.getElementById("clipboardInput");
+        const charCount = document.getElementById("charCount");
+        const wordCount = document.getElementById("wordCount");
+        const clipboardForm = document.getElementById("clipboardForm");
+        const saveBtn = document.getElementById("saveBtn");
+        const resultBox = document.getElementById("resultBox");
+        const shareUrl = document.getElementById("shareUrl");
+
+        let toastTimer;
+        let qrCodeInstance = null;
+
+        function updateCount() {
+            const text = clipboardInput.value;
+
+            charCount.textContent = text.length + " characters";
+
+            const words = text.trim() === ""
+                ? 0
+                : text.trim().split(/\s+/).length;
+
+            wordCount.textContent = words + " words";
+
+            resultBox.style.display = "none";
+        }
+
+        clipboardInput.addEventListener("input", updateCount);
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toastContainer");
+
+            container.innerHTML = "";
+
+            const toast = document.createElement("div");
+            toast.className = "toast " + type;
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            requestAnimationFrame(() => {
+                toast.classList.add("show");
+            });
+
+            clearTimeout(toastTimer);
+
+            toastTimer = setTimeout(() => {
+                toast.classList.remove("show");
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        function openClearModal() {
+            if (clipboardInput.value.trim() === "") {
+                showToast("There is no text to clear.", "info");
+                return;
+            }
+
+            document.getElementById("clearModal").style.display = "flex";
+        }
+
+        function closeClearModal() {
+            document.getElementById("clearModal").style.display = "none";
+        }
+
+        function confirmClear() {
+            clipboardInput.value = "";
+            updateCount();
+            closeClearModal();
+            showToast("✓ Text cleared successfully!", "success");
+            clipboardInput.focus();
+        }
+
+        function generateQR(url) {
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = "";
+
+            if (typeof QRCode === "undefined") {
+                showToast("QR library could not load. Check your internet connection.", "error");
+                return;
+            }
+
+            qrCodeInstance = new QRCode(qrContainer, {
+                text: url,
+                width: 160,
+                height: 160,
+                colorDark: "#080b18",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        clipboardForm.addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const text = clipboardInput.value.trim();
+
+            if (!text) {
+                showToast("Please enter some text first.", "error");
+                clipboardInput.focus();
+                return;
+            }
+
+            const formData = new FormData(clipboardForm);
+
+            saveBtn.disabled = true;
+            saveBtn.textContent = "Creating...";
+
+            try {
+                const response = await fetch("/", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    throw new Error(data.error || "Something went wrong.");
+                }
+
+                shareUrl.value = data.share_url;
+                resultBox.style.display = "block";
+
+                generateQR(data.share_url);
+
+                showToast("✓ Clipboard created successfully!", "success");
+
+                resultBox.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest"
+                });
+
+            } catch (error) {
+                showToast(error.message || "Unable to create clipboard.", "error");
+
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = "Save & Share ↗";
+            }
+        });
+
+        async function copyLink() {
+            const link = shareUrl.value;
+
+            try {
+                await navigator.clipboard.writeText(link);
+                showToast("✓ Share link copied!", "success");
+            } catch (error) {
+                shareUrl.select();
+
+                const copied = document.execCommand("copy");
+
+                if (copied) {
+                    showToast("✓ Share link copied!", "success");
+                } else {
+                    showToast("Unable to copy link.", "error");
+                }
+            }
+        }
+
+        function downloadQR() {
+            const qrContainer = document.getElementById("qrcode");
+            const canvas = qrContainer.querySelector("canvas");
+            const image = qrContainer.querySelector("img");
+
+            let imageUrl = "";
+
+            if (canvas) {
+                imageUrl = canvas.toDataURL("image/png");
+            } else if (image) {
+                imageUrl = image.src;
+            }
+
+            if (!imageUrl) {
+                showToast("QR code is not ready yet.", "error");
+                return;
+            }
+
+            const link = document.createElement("a");
+            link.href = imageUrl;
+            link.download = "QuickShare-QR-Code.png";
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            showToast("✓ QR Code downloaded!", "success");
+        }
+    </script>
+
+</body>
+</html>
